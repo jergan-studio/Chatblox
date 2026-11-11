@@ -1,5 +1,5 @@
 const $ = (id) => document.getElementById(id);
-const state = { name: localStorage.getItem('chatblox-name') || '', room: null, messages: [], channel: null };
+const state = { name: localStorage.getItem('chatblox-name') || '', room: null, messages: [], channel: null, adminSessionVerified: false };
 const reservedName = 'jergan';
 let toastTimer;
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2300)}
@@ -7,7 +7,7 @@ function safeName(value){return value.trim().replace(/[<>]/g,'').slice(0,20)}
 function saveDisplayName(){
   const requested=safeName($('displayName').value);
   if(!requested){toast('Choose a display name first.');return}
-  if(requested.toLowerCase()===reservedName && state.name.toLowerCase()!==reservedName){$('adminPassword').value='';$('adminError').textContent='';$('adminDialog').showModal();return}
+  if(requested.toLowerCase()===reservedName && !state.adminSessionVerified){$('adminPassword').value='';$('adminError').textContent='';$('adminDialog').showModal();return}
   if(state.name.toLowerCase()===reservedName && requested.toLowerCase()!==reservedName){state.isAdmin=false}
   state.name=requested;localStorage.setItem('chatblox-name',requested);$('displayName').value=requested;renderPeople();toast('Name updated.')
 }
@@ -21,7 +21,7 @@ $('adminForm').addEventListener('submit',async(e)=>{
     const response=await fetch('/api/admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:$('adminPassword').value})});
     if(!response.ok)throw new Error(response.status===404?'Admin verification needs the server setup.':'That password was not accepted.');
     const result=await response.json();if(!result.ok)throw new Error('That password was not accepted.');
-    state.name=reservedName;state.isAdmin=true;localStorage.setItem('chatblox-name',reservedName);$('displayName').value=reservedName;$('adminDialog').close();renderPeople();toast('Admin name verified.')
+    state.name=reservedName;state.isAdmin=true;state.adminSessionVerified=true;localStorage.setItem('chatblox-name',reservedName);$('displayName').value=reservedName;$('adminDialog').close();renderPeople();toast('Admin name verified.')
   }catch(err){$('adminError').textContent=err.message}
 });
 function makeCode(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let code='';for(let i=0;i<6;i++)code+=chars[Math.floor(Math.random()*chars.length)];return code}

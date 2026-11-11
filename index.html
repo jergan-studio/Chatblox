@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101321">
+  <meta name="description" content="Chatblox — make a room, share a code, and hang out.">
+  <title>Chatblox — Hang out together</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Chatblox home"><span class="brand-mark">C</span><span>chatblox</span></a>
+      <div class="top-actions"><span class="status-dot"></span><span class="status-label">Your space to talk</span><button class="ghost-button" id="nameButton">Set name</button></div>
+    </header>
+
+    <main>
+      <section class="welcome" id="homeScreen">
+        <div class="eyebrow"><span class="sparkle">✦</span> YOUR FRIEND GROUP, YOUR ROOM</div>
+        <h1>Talk about <span>anything.</span></h1>
+        <p class="intro">Make a room, invite your friends with a code, and hang out.</p>
+        <div class="name-card">
+          <label for="displayName">YOUR DISPLAY NAME</label>
+          <div class="name-row"><input id="displayName" maxlength="20" placeholder="Choose a name" autocomplete="nickname"><button id="saveName" class="small-button">Save name</button></div>
+          <p class="hint" id="nameHint">You can change your name whenever you want.</p>
+        </div>
+        <div class="room-actions">
+          <button class="primary-button" id="createRoom"><span>＋</span> Create a room</button>
+          <div class="join-box"><input id="roomCodeInput" maxlength="8" placeholder="ENTER ROOM CODE" aria-label="Room code"><button class="secondary-button" id="joinRoom">Join room <span>→</span></button></div>
+        </div>
+        <div class="feature-row"><div><b>01</b><span>Make a room</span></div><div><b>02</b><span>Share the code</span></div><div><b>03</b><span>Hang out</span></div></div>
+      </section>
+
+      <section class="chat-screen hidden" id="chatScreen">
+        <div class="chat-heading"><div><div class="eyebrow">YOU'RE HANGING OUT IN</div><h2 id="roomTitle">Room</h2></div><div class="room-code-wrap"><span>ROOM CODE</span><button id="copyCode" class="code-button">------ ⧉</button></div></div>
+        <div class="chat-layout">
+          <section class="chat-panel">
+            <div class="messages" id="messages" aria-live="polite"><div class="empty-chat"><span>✦</span><b>It's quiet in here.</b><p>Say hey and start the conversation.</p></div></div>
+            <form class="message-form" id="messageForm"><input id="messageInput" maxlength="500" placeholder="Send a message..." autocomplete="off" aria-label="Message"><button aria-label="Send message" type="submit">↑</button></form>
+            <div class="chat-foot"><span><i></i> Local demo chat</span><button id="leaveRoom">Leave room</button></div>
+          </section>
+          <aside class="people-panel"><div class="people-title">IN THIS ROOM <span id="peopleCount">1</span></div><div id="peopleList" class="people-list"></div><div class="voice-card"><div class="voice-icon">♫</div><b>Voice chat</b><p>Voice rooms are coming in the live multiplayer release.</p><button disabled>Coming soon</button></div></aside>
+        </div>
+      </section>
+    </main>
+    <footer><span>CHATBLOX <span class="footer-dot">•</span> MADE TO HANG OUT</span><span>Not affiliated with Roblox.</span></footer>
+  </div>
+
+  <dialog id="adminDialog" class="modal">
+    <form id="adminForm" method="dialog"><button type="button" class="close-modal" id="closeAdmin">×</button><div class="eyebrow">RESERVED ACCOUNT</div><h2>Admin sign in</h2><p>The name <b>jergan</b> is reserved. Enter the admin password to use it.</p><label for="adminPassword">ADMIN PASSWORD</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required><p class="modal-error" id="adminError"></p><button class="primary-button full-button" type="submit">Verify admin</button></form>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

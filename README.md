@@ -19,7 +19,7 @@ Open `index.html` in a browser, or use the VS Code Live Server extension.
 - Local demo messages sync between tabs in the same browser using BroadcastChannel.
 - `jergan` is reserved and requires server-side password verification.
 
-## Configure the reserved admin name on Vercel
+## Configure live chat on Vercel\n\nCreate a free Redis database at [Upstash](https://upstash.com/), then copy its REST URL and REST token. In the Vercel project, open **Settings → Environment Variables** and add:\n\n- `UPSTASH_REDIS_REST_URL` — the database REST URL.\n- `UPSTASH_REDIS_REST_TOKEN` — the database REST token.\n\nRedeploy after adding both variables. The `api/chat.js` function uses these values on the server; they are never exposed to browser JavaScript.\n\n## Configure the reserved admin name on Vercel
 
 In the Vercel project, open **Settings → Environment Variables** and add:
 
